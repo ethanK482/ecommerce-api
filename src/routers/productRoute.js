@@ -1,0 +1,12 @@
+import express from "express";
+import ProductController from "../lib/controllers/ProductController.js";
+import upload from "../utils/fileUpload.js";
+import { isLogin } from "../common/middlewares/isLogin.js";
+import { isAdmin } from "../common/middlewares/isAdmin.js";
+const productRoutes = express.Router();
+productRoutes.post("/", isLogin,isAdmin,upload.array("files"), ProductController.createProduct);
+productRoutes.get("/",  ProductController.getAllProduct);
+productRoutes.get("/:id",  ProductController.getOneProduct);
+productRoutes.put("/:id", isLogin,isAdmin,  ProductController.updateProduct);
+productRoutes.delete("/:id", isLogin,isAdmin,  ProductController.deleteProduct);
+export default productRoutes;
